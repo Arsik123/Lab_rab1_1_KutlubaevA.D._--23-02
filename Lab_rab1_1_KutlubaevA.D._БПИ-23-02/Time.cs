@@ -1,47 +1,52 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Lab_rab1_1_KutlubaevA.D._БПИ_23_02
 {
-    public class Time
+    public class Time : INotifyPropertyChanged
     {
-        public int Hours { get; private set; }
-        public int Minutes { get; private set; }
-        public int Seconds { get; private set; }
+        private int hours;
+        private int minutes;
+        private int seconds;
 
-        public Time(int hours, int minutes, int seconds)
+        public int Hours
         {
-            if (hours < 0 || hours > 23) throw new ArgumentOutOfRangeException(nameof(hours));
-            if (minutes < 0 || minutes > 59) throw new ArgumentOutOfRangeException(nameof(minutes));
-            if (seconds < 0 || seconds > 59) throw new ArgumentOutOfRangeException(nameof(seconds));
-            Hours = hours;
-            Minutes = minutes;
-            Seconds = seconds;
+            get => hours;
+            set { if (hours != value) { hours = value; OnPropertyChanged(); } }
+        }
+        public int Minutes
+        {
+            get => minutes;
+            set { if (minutes != value) { minutes = value; OnPropertyChanged(); } }
+        }
+        public int Seconds
+        {
+            get => seconds;
+            set { if (seconds != value) { seconds = value; OnPropertyChanged(); } }
         }
 
-        public int GetFullMinutes()
-        {
-            return Hours * 60 + Minutes;
-        }
+        public Time(int h, int m, int s) { Hours = h; Minutes = m; Seconds = s; }
 
+        public int GetFullMinutes() => Hours * 60 + Minutes;
+
+        public override string ToString()
+        {
+            return $"{Hours:D2}:{Minutes:D2}:{Seconds:D2}";
+        }
         public void DecreaseByTenMinutes()
         {
-            int totalSeconds = Hours * 3600 + Minutes * 60 + Seconds;
-            totalSeconds -= 10 * 60;
-
-            int secondsInDay = 24 * 3600;
-            totalSeconds = ((totalSeconds % secondsInDay) + secondsInDay) % secondsInDay;
-
-            Hours = totalSeconds / 3600;
-            totalSeconds %= 3600;
-            Minutes = totalSeconds / 60;
-            Seconds = totalSeconds % 60;
+            int total = Hours * 3600 + Minutes * 60 + Seconds - 10 * 60;
+            int day = 24 * 3600;
+            total = ((total % day) + day) % day;
+            Hours = total / 3600;
+            total %= 3600;
+            Minutes = total / 60;
+            Seconds = total % 60;
         }
 
-        public override string ToString() => $"{Hours:D2}:{Minutes:D2}:{Seconds:D2}";
-
-        public string ToString(string format)
-        {
-            if (format == "HH:mm:ss") return ToString();
-            return ToString();
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

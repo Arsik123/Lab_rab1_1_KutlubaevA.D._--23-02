@@ -14,26 +14,37 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="8" VerticalAlignment="Center">Часы (0-23):</TextBlock>
-        <TextBox x:Name="HoursBox" Grid.Row="0" Grid.Column="1" Margin="8" Width="120"
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="8" VerticalAlignment="Center">
+            Часы (0-23):
+        </TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="8" Width="120"
+                 Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 PreviewTextInput="TextBox_PreviewTextInput"
+                 PreviewKeyDown="TextBox_PreviewKeyDown"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="8" VerticalAlignment="Center">
+            Минуты (0-59):
+        </TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="8" Width="120"
+                 Text="{Binding Minutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  PreviewTextInput="TextBox_PreviewTextInput"
                  PreviewKeyDown="TextBox_PreviewKeyDown"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="8" VerticalAlignment="Center">Минуты (0-59):</TextBlock>
-        <TextBox x:Name="MinutesBox" Grid.Row="1" Grid.Column="1" Margin="8" Width="120"
-                 PreviewTextInput="TextBox_PreviewTextInput"
-                 PreviewKeyDown="TextBox_PreviewKeyDown"/>
-
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="8" VerticalAlignment="Top">Секунды (0-59):</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="8" VerticalAlignment="Top">
+            Секунды (0-59):
+        </TextBlock>
         <StackPanel Grid.Row="2" Grid.Column="1" Margin="8" Orientation="Vertical">
-            <TextBox x:Name="SecondsBox" Width="120" Margin="0,0,0,8"
+            <TextBox Width="120" Margin="0,0,0,8"
+                     Text="{Binding Seconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      PreviewTextInput="TextBox_PreviewTextInput"
                      PreviewKeyDown="TextBox_PreviewKeyDown"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <Button x:Name="BtnFullMinutes" Content="Полные минуты" Width="140" Margin="0,0,8,0"
+                <Button x:Name="BtnFullMinutes" Content="Полные минуты"
+                        Width="140" Margin="0,0,8,0"
                         Click="BtnFullMinutes_Click"/>
-                <Button x:Name="BtnMinus10" Content="−10 минут" Width="120"
+                <Button x:Name="BtnMinus10" Content="−10 минут"
+                        Width="120"
                         Click="BtnMinus10_Click"/>
             </StackPanel>
 
